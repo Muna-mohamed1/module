@@ -1,0 +1,153 @@
+
+    NEW ASSIGNMENTS MODULES
+package User;
+
+public class Person {
+
+        private String Firstname;
+        private int age;
+        private int id;
+
+        public Person(String Firstname,int age,int id)
+        {
+            this.Firstname=Firstname;
+            this.age=age;
+            this.id=id;
+        }
+
+
+       public void getName()
+    {
+        System.out.println("the FirstName is:"+Firstname);
+    }
+
+    public void getAge()
+    {
+        int a=age+2;
+        System.out.println("the age is:"+a);
+    }
+    }
+
+  module Project {
+    exports User;
+    requires ME;
+
+
+}
+package Item;
+
+public class Type {
+
+        private String description;
+        private String name;
+
+        public Type(String description,String name) {
+            this.description = description;
+            this.name=name;
+        }
+
+        public String getDescription() {
+            return description;
+        }
+
+
+    }
+
+module Management {
+    exports Item;
+
+}
+
+
+
+package YOU;
+
+public class Utility {
+            public static boolean validateString(String str) {
+                return str != null && !str.trim().isEmpty();
+            }
+
+            public static boolean validateEmail(String email) {
+                return email != null && email.contains("@");
+            }
+
+            public static boolean validatePhoneNumber(String phoneNumber) {
+                return phoneNumber != null && phoneNumber.matches("\\d{10}");
+            }
+        }
+
+
+
+
+module Middle {
+    exports YOU;
+
+}
+
+package Transcription;
+
+public class Now {
+
+        private int transactionId;
+
+        public Now(  int transactionId){
+
+            this.transactionId=transactionId;
+        }
+
+
+
+        public int getTransactionId() {
+            return transactionId;
+        }
+    }
+                         
+
+
+module New {
+
+     exports Transcription;
+
+
+}
+
+import Item.Type;
+import User.Person;
+import Transcription.Now;
+import YOU.Utility;
+
+public class Main {
+    public static void main(String[] args) {
+        
+        Type t = new Type("Sample description", "Sample name");
+        System.out.println("Type description: " + t.getDescription());
+
+       
+        Person person = new Person("John", 25, 1);
+        person.getName();
+        person.getAge();
+
+      
+        Now transaction = new Now(12345);
+        System.out.println("Transaction ID: " + transaction.getTransactionId());
+
+        System.out.println("Valid email: " + Utility.validateEmail("test@example.com"));
+        System.out.println("Valid phone: " + Utility.validatePhoneNumber("1234567890"));
+    }
+}
+module ME {
+    
+
+
+    requires Middle;
+
+    requires Management;
+    requires New;
+    requires Project;
+}
+
+
+
+
+
+
